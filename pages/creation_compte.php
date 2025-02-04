@@ -167,7 +167,7 @@ if (!empty($_POST)) {
         header("Location: creation_compte.php");
     } else {
 //        print("execution des requetes");
-        create_table();
+        create_table_users();
         insertInto();
         $succes_creation_compte =cree_session($_POST['nom'], $_POST['prenom'], $_POST['mdp']);
         if ($succes_creation_compte) {
@@ -189,10 +189,10 @@ if (!empty($_POST)) {
         action=""
         method="POST" enctype="multipart/form-data">
     <label>Nom :
-        <input value="name" type="text" name="nom" required><br><br>
+        <input value="Derrien" type="text" name="nom" required><br><br>
     </label>
     <label>Prenom :
-        <input value="prenom" type="text" name="prenom" required><br><br>
+        <input value="Nils" type="text" name="prenom" required><br><br>
     </label>
     <label>mot de passe :
         <input value="1234" type="password" name="mdp" required><br><br>

@@ -1,6 +1,6 @@
 <?php
 // TODO : créer un htaccess pour proteger la BD
-function create_table(){
+function create_table_users(){
     $PDO = new PDO('sqlite:../data/data.db');
     $sql = "create table if not exists inscrits(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,6 +20,19 @@ function create_table(){
 )";
     $PDO->exec($sql);
 }
+function create_table_sorties(){
+    $PDO = new PDO('sqlite:../data/data.db');
+    $sql = "create table if not exists sorties(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nom VARCHAR,
+        nb_participants INTEGER,
+        prix DECIMAL(10,2),
+        lieu VARCHAR,
+        description TEXT,
+        organisateur VARCHAR
+)";
+    $PDO->exec($sql);
+}
 
 /**
  * renvoie le premier user qui correspond
@@ -33,7 +46,7 @@ function create_table(){
  */
 function get_user(string $nom, string $prenom, string $mdp){
 //    var_dump($nom, $prenom, $mdp);
-    $PDO = new PDO('sqlite:C:\Users\nils\Desktop\projets\site_plongee\data/data.db');
+    $PDO = new PDO('sqlite:../data/data.db');
     $stmt = $PDO->prepare("select * from inscrits where nom = ? and prenom = ?");
     $stmt->execute([$nom, $prenom]);
     $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -46,7 +59,14 @@ function get_user(string $nom, string $prenom, string $mdp){
     return false;
 }
 
-
+/**
+ * utilise les variables de sessions pour récupérer l'utilisateur
+ * @return false|mixed
+ */
+function get_mysalf(){
+    var_dump($_SESSION);
+    return get_user($_SESSION['nom'], $_SESSION['prenom'], $_SESSION['mdp']);
+}
 function insertInto(){
     if (get_user($_POST['nom'], $_POST['prenom'], $_POST['mdp']) != false) {
         exit("l'utilisateur que vous essayez de créer existe déja");
@@ -88,7 +108,7 @@ function insertInto(){
  */
 function cree_sortie($nom, $nb_participants, $prix, $lieu, $description, $organisateur){
         $PDO = new PDO('sqlite:../data/data.db');
-        $sql = "INSERT INTO inscrits (nom, nb_participants, prix, lieu, description, organisateur)
+        $sql = "INSERT INTO sorties (nom, nb_participants, prix, lieu, description, organisateur)
             VALUES (?,?,?,?,?,?)";
         $stmt = $PDO->prepare($sql);
         $stmt->execute([
@@ -99,9 +119,21 @@ function cree_sortie($nom, $nb_participants, $prix, $lieu, $description, $organi
             $description,
             $organisateur,
         ]);
-    var_dump($stmt);
+//    var_dump($stmt);
 }
-
+function get_sorties(){
+    //    var_dump($nom, $prenom, $mdp);
+    $PDO = new PDO('sqlite:../data/data.db');
+    $stmt = $PDO->prepare("select * from sorties");
+    $stmt->execute();
+    $sortie = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (count($sortie) == 0)
+        return false;
+    else {
+//    var_dump($sortie);
+        return $sortie;
+    }
+}
 ?>
 
 
