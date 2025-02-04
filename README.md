@@ -1,3 +1,3 @@
 # site_plongee
 un site vite fait (c fo)
-https://norflic.github.io/site_plongee/
+http://localhost:63342/site_plongee/pages/accueil.php
