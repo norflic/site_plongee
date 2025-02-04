@@ -169,7 +169,7 @@ if (!empty($_POST)) {
 //        print("execution des requetes");
         create_table();
         insertInto();
-        $succes_creation_compte =cree_session();
+        $succes_creation_compte =cree_session($_POST['nom'], $_POST['prenom'], $_POST['mdp']);
         if ($succes_creation_compte) {
             var_dump("je me deplace");
             header("Location: accueil.php");
@@ -182,14 +182,6 @@ if (!empty($_POST)) {
 
 }
 }
-//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//    if (verif_all()) {
-//        header("Location: accueil.php");
-//        exit;
-//    } else {
-//        echo "Une ou plusieurs vérifications ont échoué. Veuillez corriger les erreurs.";
-//    }
-//}
 
 ?>
 <body>
@@ -251,6 +243,6 @@ if (!empty($_POST)) {
     <input type="submit" value="Envoyer">
 </form>
 <!--sql lite-->
-<script src="../apiAdresse.js"></script>
+<script src="apiAdresse.js"></script>
 </body>
 </html>

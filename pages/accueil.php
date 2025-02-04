@@ -12,6 +12,6 @@
 ?>
 <body>
 
-<script src="../apiAdresse.js"></script>
+<script src="apiAdresse.js"></script>
 </body>
 </html>

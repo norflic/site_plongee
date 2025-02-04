@@ -20,6 +20,33 @@ function create_table(){
 )";
     $PDO->exec($sql);
 }
+
+/**
+ * renvoie le premier user qui correspond
+ * renvoie false si il n'existe pas
+ * necessite un mot de pass non haché
+ * @param string $nom
+ * @param string $prenom
+ * @param string $mdp
+ * @param bool $estHaché
+ * @return false|mixed
+ */
+function get_user(string $nom, string $prenom, string $mdp){
+//    var_dump($nom, $prenom, $mdp);
+    $PDO = new PDO('sqlite:C:\Users\nils\Desktop\projets\site_plongee\data/data.db');
+    $stmt = $PDO->prepare("select * from inscrits where nom = ? and prenom = ?");
+    $stmt->execute([$nom, $prenom]);
+    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    for ($i = 0; $i < count($user); $i++) {
+        if (password_verify($mdp, $user[$i]['mdp'])) {
+            return $user[$i];
+        }
+    }
+//    var_dump($user);
+    return false;
+}
+
+
 function insertInto(){
     if (get_user($_POST['nom'], $_POST['prenom'], $_POST['mdp']) != false) {
         exit("l'utilisateur que vous essayez de créer existe déja");
@@ -49,4 +76,32 @@ function insertInto(){
     }
 }
 
+/**
+ * cree une sortie
+ * @param $nom
+ * @param $nb_participants
+ * @param $prix
+ * @param $lieu
+ * @param $description
+ * @param $organisateur
+ * @return void
+ */
+function cree_sortie($nom, $nb_participants, $prix, $lieu, $description, $organisateur){
+        $PDO = new PDO('sqlite:../data/data.db');
+        $sql = "INSERT INTO inscrits (nom, nb_participants, prix, lieu, description, organisateur)
+            VALUES (?,?,?,?,?,?)";
+        $stmt = $PDO->prepare($sql);
+        $stmt->execute([
+            $nom,
+            $nb_participants,
+            $prix,
+            $lieu,
+            $description,
+            $organisateur,
+        ]);
+    var_dump($stmt);
+}
+
 ?>
+
+
