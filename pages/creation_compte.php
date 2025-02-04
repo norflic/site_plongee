@@ -115,7 +115,9 @@ return false;
 }
 
 
-
+// TODO : mettre l'id dans le nom de fichier pour empecher les remplacements
+// TODO : mettre comme nom id+"CACI"format
+// TODO : rajouter colonne nom de fichier
 function fichier_valide(){
     $message_errreur = "";
     if ($_FILES['caci'] && $_FILES['caci']['error'] == 0) {
@@ -162,7 +164,7 @@ function get_chemin_fichier()
 if (!empty($_POST)) {
     if (!verif_all()){
         var_dump("c'est pas rempli");
-        header("Location: création_compte.php");
+        header("Location: creation_compte.php");
     } else {
 //        print("execution des requetes");
         create_table();
@@ -175,7 +177,7 @@ if (!empty($_POST)) {
         } else {
             var_dump("je me deplace pas");
             echo "Une ou plusieurs vérifications ont échoué. Veuillez corriger les erreurs.";
-            header("Location: création_compte.php");
+            header("Location: creation_compte.php");
         }
 
 }

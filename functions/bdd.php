@@ -1,5 +1,5 @@
 <?php
-
+// TODO : créer un htaccess pour proteger la BD
 function create_table(){
     $PDO = new PDO('sqlite:C:\Users\nils\Desktop\projets\site_plongee\data/data.db');
     $sql = "create table if not exists inscrits(
