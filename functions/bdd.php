@@ -1,7 +1,7 @@
 <?php
 // TODO : créer un htaccess pour proteger la BD
 function create_table(){
-    $PDO = new PDO('sqlite:C:\Users\nils\Desktop\projets\site_plongee\data/data.db');
+    $PDO = new PDO('sqlite:../data/data.db');
     $sql = "create table if not exists inscrits(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nom varchar,
@@ -24,7 +24,7 @@ function insertInto(){
     if (get_user($_POST['nom'], $_POST['prenom'], $_POST['mdp']) != false) {
         exit("l'utilisateur que vous essayez de créer existe déja");
     } else {
-        $PDO = new PDO('sqlite:C:\Users\nils\Desktop\projets\site_plongee\data/data.db');
+        $PDO = new PDO('sqlite:../data/data.db');
         $sql = "INSERT INTO inscrits (nom, prenom, mdp, date_naissance, ville, code_postal,
                    nom_rue, no_rue, pays, e_mail, date_certif, no_tel, chemin_fichier)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";

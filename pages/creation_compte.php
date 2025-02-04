@@ -147,10 +147,10 @@ function fichier_valide(){
 function get_chemin_fichier()
 {
     if (fichier_valide()){
-        $uploads_dir = 'C:\Users\nils\Desktop\projets\site_plongee\uploads';
+        $uploads_dir = '../uploads';
     $tmp_name = $_FILES["caci"]["tmp_name"];
     $destination = $uploads_dir . '/' . $_FILES["caci"]["name"];
-//    var_dump($destination);
+    var_dump($destination);
     if (!move_uploaded_file($tmp_name, $destination)){
         exit("probleme durant le telechargement de l'image");
     }
