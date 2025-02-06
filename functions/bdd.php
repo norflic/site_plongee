@@ -86,33 +86,46 @@ function get_myself(){
     var_dump($_SESSION);
     return get_user($_SESSION['nom'], $_SESSION['prenom'], $_SESSION['mdp']);
 }
-function insertInto(){
-    if (get_user($_POST['nom'], $_POST['prenom'], $_POST['mdp']) != false) {
+
+function insertInto_s1_2($id_user)
+{
+    if (get_user($_SESSION['tmp_nom'], $_SESSION['tmp_prenom'], $_SESSION['tmp_mdp']) != false) {
         exit("l'utilisateur que vous essayez de créer existe déja");
     } else {
         $PDO = new PDO('sqlite:../data/data.db');
-        $sql = "INSERT INTO inscrits (nom, prenom, mdp, date_naissance, ville, code_postal,
-                   nom_rue, no_rue, pays, e_mail, date_certif, no_tel, chemin_fichier)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO inscrits (nom, prenom, mdp, 
+                      date_naissance, date_certif, chemin_fichier)
+            VALUES (?,?,?,?,?,?)";
         $stmt = $PDO->prepare($sql);
         $chemin_fichier = get_chemin_fichier();
         $stmt->execute([
-            $_POST['nom'],
-            $_POST['prenom'],
-            password_hash($_POST['mdp'], PASSWORD_DEFAULT),
+            $_SESSION['tmp_nom'],
+            $_SESSION['tmp_prenom'],
+            password_hash($_SESSION['tmp_mdp'], PASSWORD_DEFAULT),
             $_POST['date_naissance'],
+            $_POST['date_certif'],
+            $chemin_fichier
+        ]);
+//    var_dump($stmt);
+    }
+}
+function insertInto_s3($id_user){
+        $PDO = new PDO('sqlite:../data/data.db');
+        $sql = "INSERT INTO inscrits (ville, code_postal,
+                   nom_rue, no_rue, pays, e_mail, no_tel)
+            VALUES (?,?,?,?,?,?,?)";
+        $stmt = $PDO->prepare($sql);
+        $chemin_fichier = get_chemin_fichier();
+        $stmt->execute([
             $_POST['ville'],
             $_POST['code_postal'],
             $_POST['nom_rue'],
             $_POST['no_rue'],
             $_POST['pays'],
             $_POST['e_mail'],
-            $_POST['date_certif'],
             $_POST['no_tel'],
-            $chemin_fichier
         ]);
 //    var_dump($stmt);
-    }
 }
 
 /**

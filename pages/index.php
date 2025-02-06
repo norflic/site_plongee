@@ -1,4 +1,4 @@
 <?php
 
-header("Location: creation_compte.php");
+header("Location: inscription_s1.php");
 ?>
