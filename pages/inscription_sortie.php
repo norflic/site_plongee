@@ -1,7 +1,8 @@
 <?php
 include 'header.php';
 require '../functions/bdd.php';
-session_start();
+require '../functions/accounts.php';
+connexion_rederector();
 function nb_equipements_valides(){
     $regex = "/[0-9]/";
     if (preg_match($regex, $_POST['nb_stabes'])

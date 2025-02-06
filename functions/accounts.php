@@ -22,23 +22,18 @@ function cree_session($nom, $prenom, $mdp) :bool
 
 
 /**
- * necessite un mot de passe haché
- * compare les variables de session aux valeurs de la bd
- * renvoie true si il existe des resultat similaire
- * @param string $nom
- * @param string $prenom
- * @param string $password
+ * si pas connecte, redirige vers connexion et renvoie true
+ * sinon renvoie false
  * @return bool
  */
-function is_connected() :bool{
-
-    $user = get_user($_SESSION['nom'] , $_SESSION['prenom'], $_SESSION['mdp']);
-    if ($user->rowCount()>0){
+function connexion_rederector() :bool{
+    $user = (!empty($_SESSION['nom']));
+    if ($user == false){
+        header("Location: connexion.php");
         return true;
+    } else {
+        return false;
     }
-//    TODO : renvoyer sur la page de connexion
-    return false;
-
 }
 
 ?>

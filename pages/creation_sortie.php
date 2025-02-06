@@ -1,6 +1,7 @@
 <?php
 include 'header.php';
-session_start();
+require '../functions/accounts.php';
+connexion_rederector();
 require '../functions/bdd.php';
 if (!empty($_POST)) {
     $myself = get_myself();

@@ -40,5 +40,6 @@ include 'navBar.php';
     </label>
     <input type="submit" value="Envoyer">
 </form>
+<a href="creation_compte.php">je n'ai pas de compte (/kill)</a>
 </body>
 </html>

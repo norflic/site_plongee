@@ -2,7 +2,8 @@
 <?php
 include 'header.php';
 require '../functions/bdd.php';
-session_start();
+require '../functions/accounts.php';
+connexion_rederector();
 $sorties = get_sorties()
 
 
