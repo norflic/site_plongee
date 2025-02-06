@@ -1,6 +1,8 @@
 <?php
-require '../functions/verification.php';
 session_start();
+require '../functions/verification.php';
+require '../functions/bdd.php';
+require '../functions/accounts.php';
 function verif_all()
 {
     if (empty($_POST['date_naissance'])
@@ -19,15 +21,18 @@ function verif_all()
             var_dump("Vérification du fichier : " . fichier_valide());
         }
     }
+    return false;
 }
+
 // TODO : mettre l'id dans le nom de fichier pour empecher les remplacements
 // TODO : mettre comme nom id+"CACI"format
 // TODO : rajouter colonne nom de fichier
-function fichier_valide(){
+function fichier_valide()
+{
     $message_errreur = "";
     if ($_FILES['caci'] && $_FILES['caci']['error'] == 0) {
         $temp_name = $_FILES['caci']['tmp_name'];
-        var_dump($_FILES['caci']['tmp_name']);
+//        var_dump($_FILES['caci']['tmp_name']);
 
         if (!is_uploaded_file($temp_name)) {
             $message_errreur = "le fichier est introuvable";
@@ -49,14 +54,15 @@ function fichier_valide(){
     }
     exit($message_errreur);
 }
+
 function get_chemin_fichier()
 {
-    if (fichier_valide()){
+    if (fichier_valide()) {
         $uploads_dir = '../uploads';
         $tmp_name = $_FILES["caci"]["tmp_name"];
         $destination = $uploads_dir . '/' . $_FILES["caci"]["name"];
         var_dump($destination);
-        if (!move_uploaded_file($tmp_name, $destination)){
+        if (!move_uploaded_file($tmp_name, $destination)) {
             var_dump("debut, dest");
             var_dump($tmp_name);
             var_dump($destination);
@@ -69,14 +75,13 @@ function get_chemin_fichier()
 }
 
 if (!empty($_POST)) {
-    if (!verif_all()){
+    if (!verif_all()) {
         var_dump("c'est pas rempli");
-        header("Location: inscription_s1.php");
     } else {
 //        print("execution des requetes");
         create_table_users();
-        insertInto();
-        $succes_creation_compte =cree_session($_POST['nom'], $_POST['prenom'], $_POST['mdp']);
+        insertInto_s1_2();
+        $succes_creation_compte = cree_session($_SESSION['tmp_nom'], $_SESSION['tmp_prenom'], $_SESSION['tmp_mdp']);
         if ($succes_creation_compte) {
             var_dump("je me deplace");
             header("Location: inscription_s3.php");
@@ -90,16 +95,19 @@ if (!empty($_POST)) {
 }
 ?>
 <body>
-
-<label for="date_naissance">date de naissance :
-    <input type="date" value="2020-05-05" name="date_naissance" required><br><br>
-</label>
-<label>date de création de certificat medical :
-    <input type="date" value="2024-09-09" name="date_certif" required><br><br>
-</label>
-<form action="">
+    <a href="inscription_s1.php">etape precedente</a>
+<form
+        action=""
+        method="POST" enctype="multipart/form-data">
+    <label for="date_naissance">date de naissance :
+        <input type="date" value="2020-05-05" name="date_naissance" required><br><br>
+    </label>
+    <label>date de création de certificat medical :
+        <input type="date" value="2024-09-09" name="date_certif" required><br><br>
+    </label>
     <label>CACI (certificat d'aptitude) :
         <input type="file" value="" id="caci" name="caci" required><br><br>
     </label>
+    <input type="submit" value="suivant">
 </form>
 </body>

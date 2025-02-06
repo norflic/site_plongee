@@ -4,28 +4,27 @@ require '../functions/accounts.php';
 require '../functions/bdd.php';
 require '../functions/verification.php';
 
-function verif_all(){
-if (empty($_POST['nom'])
-    || empty($_POST['prenom'])
-    || empty($_POST['mdp']))
-    {
+function verif_all()
+{
+    if (empty($_POST['nom'])
+        || empty($_POST['prenom'])
+        || empty($_POST['mdp'])) {
         print("l'un des chaps n'est pas rempli");
         return false;
     } else {
         if (verif_name()
-            && verif_prenom())
-        {
+            && verif_prenom()) {
             return true;
         } else {
-            var_dump("Vérification du nom : ". verif_name());
-            var_dump("Vérification du prénom : ". verif_prenom());
+            var_dump("Vérification du nom : " . verif_name());
+            var_dump("Vérification du prénom : " . verif_prenom());
         }
-}
-return false;
+    }
+    return false;
 }
 
 if (!empty($_POST)) {
-    if (!verif_all()){
+    if (!verif_all()) {
         var_dump("c'est pas rempli");
     } else {
         session_start();
@@ -33,14 +32,14 @@ if (!empty($_POST)) {
         $_SESSION['tmp_prenom'] = $_POST['prenom'];
         $_SESSION['tmp_mdp'] = $_POST['mdp'];
         header("Location: inscription_s2.php");
-}
+    }
 }
 
 ?>
-<body >
+<body>
 <form
         action=""
-        method="POST" enctype="multipart/form-data">
+        method="POST">
     <label>Nom :
         <input value="Derrien" type="text" name="nom" required><br><br>
     </label>
@@ -50,7 +49,7 @@ if (!empty($_POST)) {
     <label>mot de passe :
         <input value="1234" type="password" name="mdp" required><br><br>
     </label>
-        <input type="submit" value="suivant">
+    <input type="submit" value="suivant">
 </form>
 <!--sql lite-->
 <script src="apiAdresse.js"></script>

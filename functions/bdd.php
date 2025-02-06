@@ -1,6 +1,7 @@
 <?php
 // TODO : créer un htaccess pour proteger la BD
-function create_table_users(){
+function create_table_users()
+{
     $PDO = new PDO('sqlite:../data/data.db');
     $sql = "create table if not exists inscrits(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +21,9 @@ function create_table_users(){
 )";
     $PDO->exec($sql);
 }
-function create_table_sorties(){
+
+function create_table_sorties()
+{
     $PDO = new PDO('sqlite:../data/data.db');
     $sql = "create table if not exists sorties(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,7 +37,8 @@ function create_table_sorties(){
     $PDO->exec($sql);
 }
 
-function create_table_sortie_users(){
+function create_table_sortie_users()
+{
     $PDO = new PDO('sqlite:../data/data.db');
     $sql = "create table if not exists sortie_users(
         id_user INTEGER,
@@ -62,7 +66,8 @@ function create_table_sortie_users(){
  * @param bool $estHaché
  * @return false|mixed
  */
-function get_user(string $nom, string $prenom, string $mdp){
+function get_user(string $nom, string $prenom, string $mdp)
+{
 //    var_dump($nom, $prenom, $mdp);
     $PDO = new PDO('sqlite:../data/data.db');
     $stmt = $PDO->prepare("select * from inscrits where nom = ? and prenom = ?");
@@ -81,13 +86,14 @@ function get_user(string $nom, string $prenom, string $mdp){
  * utilise les variables de sessions pour récupérer l'utilisateur
  * @return false|mixed
  */
-function get_myself(){
+function get_myself()
+{
     var_dump("SESSION = ");
     var_dump($_SESSION);
     return get_user($_SESSION['nom'], $_SESSION['prenom'], $_SESSION['mdp']);
 }
 
-function insertInto_s1_2($id_user)
+function insertInto_s1_2()
 {
     if (get_user($_SESSION['tmp_nom'], $_SESSION['tmp_prenom'], $_SESSION['tmp_mdp']) != false) {
         exit("l'utilisateur que vous essayez de créer existe déja");
@@ -109,23 +115,34 @@ function insertInto_s1_2($id_user)
 //    var_dump($stmt);
     }
 }
-function insertInto_s3($id_user){
+
+function insertInto_s3($id_user)
+{
+    try {
         $PDO = new PDO('sqlite:../data/data.db');
-        $sql = "INSERT INTO inscrits (ville, code_postal,
-                   nom_rue, no_rue, pays, e_mail, no_tel)
-            VALUES (?,?,?,?,?,?,?)";
+        $sql = "UPDATE inscrits 
+                SET ville = :ville, 
+                    code_postal = :code_postal, 
+                    nom_rue = :nom_rue, 
+                    no_rue = :no_rue, 
+                    pays = :pays, 
+                    e_mail = :email, 
+                    no_tel = :no_tel 
+                WHERE id = :id_user";
         $stmt = $PDO->prepare($sql);
-        $chemin_fichier = get_chemin_fichier();
-        $stmt->execute([
-            $_POST['ville'],
-            $_POST['code_postal'],
-            $_POST['nom_rue'],
-            $_POST['no_rue'],
-            $_POST['pays'],
-            $_POST['e_mail'],
-            $_POST['no_tel'],
-        ]);
+        $stmt->bindParam(':ville', $_POST['ville']);
+        $stmt->bindParam(':code_postal', $_POST['code_postal']);
+        $stmt->bindParam(':nom_rue', $_POST['nom_rue']);
+        $stmt->bindParam(':no_rue', $_POST['no_rue']);
+        $stmt->bindParam(':pays', $_POST['pays']);
+        $stmt->bindParam(':email', $_POST['e_mail']);
+        $stmt->bindParam(':no_tel', $_POST['no_tel']);
+        $stmt->bindParam(':id_user', $id_user);
+        $stmt->execute();
 //    var_dump($stmt);
+    } catch (PDOException $e) {
+        throw new Exception("Erreur lors de la mise à jour : " . $e->getMessage());
+    }
 }
 
 /**
@@ -138,22 +155,25 @@ function insertInto_s3($id_user){
  * @param $organisateur
  * @return void
  */
-function cree_sortie($nom, $nb_participants, $prix, $lieu, $description, $organisateur){
-        $PDO = new PDO('sqlite:../data/data.db');
-        $sql = "INSERT INTO sorties (nom, nb_participants, prix, lieu, description, organisateur)
+function cree_sortie($nom, $nb_participants, $prix, $lieu, $description, $organisateur)
+{
+    $PDO = new PDO('sqlite:../data/data.db');
+    $sql = "INSERT INTO sorties (nom, nb_participants, prix, lieu, description, organisateur)
             VALUES (?,?,?,?,?,?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute([
-            $nom,
-            $nb_participants,
-            $prix,
-            $lieu,
-            $description,
-            $organisateur,
-        ]);
+    $stmt = $PDO->prepare($sql);
+    $stmt->execute([
+        $nom,
+        $nb_participants,
+        $prix,
+        $lieu,
+        $description,
+        $organisateur,
+    ]);
 //    var_dump($stmt);
 }
-function get_sorties(){
+
+function get_sorties()
+{
     //    var_dump($nom, $prenom, $mdp);
     $PDO = new PDO('sqlite:../data/data.db');
     $stmt = $PDO->prepare("select * from sorties");
@@ -166,7 +186,9 @@ function get_sorties(){
         return $sortie;
     }
 }
-function get_sortie($id_sortie){
+
+function get_sortie($id_sortie)
+{
     //    var_dump($nom, $prenom, $mdp);
     $PDO = new PDO('sqlite:../data/data.db');
     $stmt = $PDO->prepare("select * from sorties where id = ?");
@@ -174,7 +196,7 @@ function get_sortie($id_sortie){
     );
     $sortie = $stmt->fetch(PDO::FETCH_ASSOC);
 //        var_dump($sortie);
-        return $sortie;
+    return $sortie;
 }
 
 function inscription_sortie($id_user, $id_sortie): void
@@ -200,10 +222,12 @@ function inscription_sortie($id_user, $id_sortie): void
                 <?= $e->getMessage(); ?>
             </details>
         </div>
-    <?php
+        <?php
     }
 }
-function ajoute_materiel($id_user, $id_sortie, $materiel, $type, $nb_materiel){
+
+function ajoute_materiel($id_user, $id_sortie, $materiel, $type, $nb_materiel)
+{
     $PDO = new PDO('sqlite:../data/data.db');
     if ($materiel == "combi") {
         $sql = "UPDATE sortie_users SET type_combi = :type_materiel, nb_combis = :nb_materiel WHERE id_user = :id_user AND id_sortie = :id_sortie";
@@ -214,7 +238,7 @@ function ajoute_materiel($id_user, $id_sortie, $materiel, $type, $nb_materiel){
     } elseif ($materiel == "detendeur") {
         $sql = "UPDATE sortie_users SET type_detendeur = :type_materiel, nb_detendeurs = :nb_materiel WHERE id_user = :id_user AND id_sortie = :id_sortie";
     } else {
-        throw new Exception("ce type de materiel n'existe pas : ".$materiel." meteriels autorises : combi, stabe, bloc, detendeur");
+        throw new Exception("ce type de materiel n'existe pas : " . $materiel . " meteriels autorises : combi, stabe, bloc, detendeur");
     }
     $stmt = $PDO->prepare($sql);
     $stmt->bindParam(':type_materiel', $type);

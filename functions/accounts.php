@@ -4,7 +4,9 @@ function cree_session($nom, $prenom, $mdp) :bool
 //    var_dump("je crée une session, post =");
 //    var_dump($_POST);
 //    var_dump("fin du message");
-    session_start();
+    if (session_status() != 2){
+        session_start();
+    }
     $user = get_user($nom, $prenom, $mdp);
 
     if ($user == false){
@@ -12,9 +14,9 @@ function cree_session($nom, $prenom, $mdp) :bool
         var_dump($user);
         return false;
     } else {
-        $_SESSION['nom'] = $_POST['nom'];
-        $_SESSION['prenom'] = $_POST['prenom'];
-        $_SESSION['mdp'] = $_POST['mdp'];
+        $_SESSION['nom'] = $nom;
+        $_SESSION['prenom'] = $prenom;
+        $_SESSION['mdp'] = $mdp;
         $_SESSION['id'] = $user['id'];
         return true;
     }
@@ -27,6 +29,9 @@ function cree_session($nom, $prenom, $mdp) :bool
  * @return bool
  */
 function connexion_rederector() :bool{
+    if (session_status() != 2){
+        session_start();
+    }
     $user = (!empty($_SESSION['nom']));
     if ($user == false){
         header("Location: connexion.php");

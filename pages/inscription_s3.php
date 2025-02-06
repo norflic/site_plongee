@@ -1,5 +1,6 @@
 <?php
 require '../functions/verification.php';
+require '../functions/bdd.php';
 session_start();
 function verif_all()
 {
@@ -23,59 +24,55 @@ function verif_all()
             var_dump("Vérification du numéro de téléphone : " . verif_no_tel());
         }
     }
+    return false;
 }
 
 if (!empty($_POST)) {
-    if (!verif_all()){
+    if (!verif_all()) {
+        var_dump($_POST);
         var_dump("c'est pas rempli");
-        header("Location: inscription_s1.php");
     } else {
 //        print("execution des requetes");
         create_table_users();
-        insertInto();
-        $succes_creation_compte =cree_session($_POST['nom'], $_POST['prenom'], $_POST['mdp']);
-        if ($succes_creation_compte) {
-            var_dump("je me deplace");
-            header("Location: accueil.php");
-            exit;
-        } else {
-            var_dump("je me deplace pas");
-            echo "Une ou plusieurs vérifications ont échoué. Veuillez corriger les erreurs.";
-            header("Location: inscription_s1.php");
+        insertInto_s3($_SESSION['id']);
+        header("Location: accueil.php");
         }
-
-    }
 }
 ?>
 
 <body>
-<fieldset>
-    <legend>adresse</legend>
-    <label>numero de rue :
-        <input type="text" value="100" name="no_rue" required><br><br>
+<form
+        method="POST" enctype="multipart/form-data">
+    <fieldset>
+        <legend>adresse</legend>
+        <label>numero de rue :
+            <input type="text" value="100" name="no_rue" required><br><br>
+        </label>
+        <label for="cp">
+            Code postal
+            <input type="text" value="0" id="code_postal" name="code_postal"
+                   placeholder="Enter your postal code here">
+        </label>
+        <label for="ville">
+            Ville
+            <select id="ville" name="ville">
+                <option value="">Select ville</option>
+            </select> <br/><br/>
+        </label>
+        <label>rue :
+            <input type="text" value="cours random" name="nom_rue" required><br><br>
+        </label>
+        <label>pays :
+            <input type="text" value="france" name="pays" required><br><br>
+        </label>
+    </fieldset>
+    <label>Email :
+        <input type="email" value="rtegrfzed@gmail.com" id="e_mail" name="e_mail" required><br><br>
     </label>
-    <label for="cp">
-        Code postal
-        <input type="text" value="0" id="code_postal" name="code_postal"
-               placeholder="Enter your postal code here">
+    <label>numero tel :
+        <input type="tel" value="0781881567" id="no_tel" name="no_tel" required><br><br>
     </label>
-    <label for="ville">
-        Ville
-        <select id="ville" name="ville">
-            <option value="">Select ville</option>
-        </select> <br/><br/>
-    </label>
-    <label>rue :
-        <input type="text" value="cours random" name="nom_rue" required><br><br>
-    </label>
-    <label>pays :
-        <input type="text" value="france" name="pays" required><br><br>
-    </label>
-</fieldset>
-<label>Email :
-    <input type="email" value="rtegrfzed@gmail.com" id="e_mail" name="e_mail" required><br><br>
-</label>
-<label>numero tel :
-    <input type="tel" value="0781881567" id="no_tel" name="no_tel" required><br><br>
-</label>
+    <input type="submit" value="suivant">
+</form>
+<script src="apiAdresse.js"></script>
 </body>
