@@ -40,9 +40,13 @@ function create_table_sortie_users(){
         id_user INTEGER,
         id_sortie INTEGER,
         nb_combis INTEGER DEFAULT 0,
+        type_combi TEXT,
         nb_stabes INTEGER DEFAULT 0,
+        type_stabe TEXT,
         nb_blocs INTEGER DEFAULT 0,
+        type_bloc TEXT,
         nb_detendeurs INTEGER DEFAULT 0,
+        type_detendeur TEXT,
         PRIMARY KEY (id_user, id_sortie)
 )";
     $PDO->exec($sql);
@@ -185,8 +189,30 @@ function inscription_sortie($id_user, $id_sortie): void
         </div>
     <?php
     }
-
 }
+function ajoute_materiel($id_user, $id_sortie, $materiel, $type, $nb_materiel){
+    $PDO = new PDO('sqlite:../data/data.db');
+    if ($materiel == "combi") {
+        $sql = "UPDATE sortie_users SET type_combi = :type_materiel, nb_combis = :nb_materiel WHERE id_user = :id_user AND id_sortie = :id_sortie";
+    } elseif ($materiel == "stabe") {
+        $sql = "UPDATE sortie_users SET type_stabe = :type_materiel, nb_stabes = :nb_materiel WHERE id_user = :id_user AND id_sortie = :id_sortie";
+    } elseif ($materiel == "bloc") {
+        $sql = "UPDATE sortie_users SET type_bloc = :type_materiel, nb_blocs = :nb_materiel WHERE id_user = :id_user AND id_sortie = :id_sortie";
+    } elseif ($materiel == "detendeur") {
+        $sql = "UPDATE sortie_users SET type_detendeur = :type_materiel, nb_detendeurs = :nb_materiel WHERE id_user = :id_user AND id_sortie = :id_sortie";
+    } else {
+        throw new Exception("ce type de materiel n'existe pas : ".$materiel." meteriels autorises : combi, stabe, bloc, detendeur");
+    }
+    $stmt = $PDO->prepare($sql);
+    $stmt->bindParam(':type_materiel', $type);
+    $stmt->bindParam(':nb_materiel', $nb_materiel);
+    $stmt->bindParam(':id_user', $id_user);
+    $stmt->bindParam(':id_sortie', $id_sortie);
+
+    $stmt->execute();
+//    var_dump($stmt);
+}
+
 ?>
 
 
