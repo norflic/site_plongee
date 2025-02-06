@@ -5,7 +5,7 @@ div{
    color : #F7E733;
 }
 
-.main[data-astro-cid-3ef6ksr2] {
+.main {
     display:flex;
     flex-direction:column;
     width:100%;
@@ -24,5 +24,10 @@ div{
     border: black;
     border-radius: 10px;
     border: solid;
+    padding: 8px;
 
+
+}
+.sortie:hover {
+    cursor: pointer ;
 }

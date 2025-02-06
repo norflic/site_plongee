@@ -8,7 +8,7 @@
 session_start();
 require '../functions/bdd.php';
 if (!empty($_POST)) {
-    $myself = get_mysalf();
+    $myself = get_myself();
     if($myself != false){
         create_table_sorties();
         cree_sortie(
@@ -25,6 +25,9 @@ if (!empty($_POST)) {
 
 ?>
 <body>
+<?php
+include 'navBar.php';
+?>
 <form
     action=""
     method="POST">

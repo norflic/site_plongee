@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="form.css">
 </head>
 <?php
-session_start();
 require '../functions/accounts.php';
 require '../functions/bdd.php';
 // Si le tableau $POST existe alors le formulaire a été envoyé
@@ -152,6 +152,9 @@ function get_chemin_fichier()
     $destination = $uploads_dir . '/' . $_FILES["caci"]["name"];
     var_dump($destination);
     if (!move_uploaded_file($tmp_name, $destination)){
+        var_dump("debut, dest");
+        var_dump($tmp_name);
+        var_dump($destination);
         exit("probleme durant le telechargement de l'image");
     }
     return $destination;
@@ -184,8 +187,7 @@ if (!empty($_POST)) {
 }
 
 ?>
-<body>
-teeeeeeeeeeeeeeeeeeeeeeeeest
+<body >
 <form
         action=""
         method="POST" enctype="multipart/form-data">

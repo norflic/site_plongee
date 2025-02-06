@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+
+<?php
+include 'header.php';
+?>
 <?php
 require '../functions/bdd.php';
 session_start();
@@ -14,6 +11,9 @@ $sorties = get_sorties()
 
 ?>
 <body>
+<?php
+include 'navBar.php';
+?>
 <div id="sorties_cards">
 
 </div>

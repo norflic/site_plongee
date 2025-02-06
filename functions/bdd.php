@@ -34,6 +34,16 @@ function create_table_sorties(){
     $PDO->exec($sql);
 }
 
+function create_table_sortie_users(){
+    $PDO = new PDO('sqlite:../data/data.db');
+    $sql = "create table if not exists sortie_users(
+        id_user INTEGER,
+        id_sortie INTEGER ,
+        PRIMARY KEY (id_user, id_sortie)
+)";
+    $PDO->exec($sql);
+}
+
 /**
  * renvoie le premier user qui correspond
  * renvoie false si il n'existe pas
@@ -63,7 +73,8 @@ function get_user(string $nom, string $prenom, string $mdp){
  * utilise les variables de sessions pour récupérer l'utilisateur
  * @return false|mixed
  */
-function get_mysalf(){
+function get_myself(){
+    var_dump("SESSION = ");
     var_dump($_SESSION);
     return get_user($_SESSION['nom'], $_SESSION['prenom'], $_SESSION['mdp']);
 }
@@ -133,6 +144,34 @@ function get_sorties(){
 //    var_dump($sortie);
         return $sortie;
     }
+}
+
+function inscription_sortie($id_user, $id_sortie): void
+{
+    try {
+        $PDO = new PDO('sqlite:../data/data.db');
+        $sql = "INSERT INTO sortie_users (id_user, id_sortie)
+            VALUES (?,?)";
+        $stmt = $PDO->prepare($sql);
+        $stmt->execute([
+            $id_user,
+            $id_sortie,
+        ]);
+//    var_dump($stmt);
+    } catch (PDOException $e) {
+        ?>
+        <div>
+            <strong>Une erreur s'est produite</strong>
+            <p> Vous etes deja isncrit</p>
+            <details>
+                <summary>Details</summary>
+                id_user=<?= $id_user ?>, id_sortie=<?= $id_sortie ?>
+                <?= $e->getMessage(); ?>
+            </details>
+        </div>
+    <?php
+    }
+
 }
 ?>
 

@@ -1,11 +1,11 @@
 <?php
-
 function cree_session($nom, $prenom, $mdp) :bool
 {
 //    var_dump("je crée une session, post =");
 //    var_dump($_POST);
 //    var_dump("fin du message");
-    $user = get_user($_POST['nom'], $_POST['prenom'], $_POST['mdp']);
+    session_start();
+    $user = get_user($nom, $prenom, $mdp);
 
     if ($user == false){
         var_dump("aucun utilisateur enregistré dans la bd n'a ces infos");

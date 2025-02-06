@@ -1,6 +1,7 @@
 <?php
 require '../functions/accounts.php';
 require '../functions/bdd.php';
+session_start();
 if (!empty($_POST)) {
     if (!get_user($_POST['nom'], $_POST['prenom'], $_POST['mdp'])) {
         var_dump("vous n'existez pas");
@@ -18,8 +19,12 @@ if (!empty($_POST)) {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="form.css">
 </head>
 <body>
+<?php
+include 'navBar.php';
+?>
 <form
     action=""
     method="POST">
