@@ -20,6 +20,9 @@ if (!empty($_POST)) {
             create_table_sortie_users();
             inscription_sortie($user['id'], $_GET["id_sortie"]);
             ajoute_materiel($user['id'], $_GET["id_sortie"],"stabe", $_POST['taille_stabes'], $_POST['nb_stabes']);
+            ajoute_materiel($user['id'], $_GET["id_sortie"],"combi", $_POST['taille_combi'], $_POST['nb_combinaisons']);
+            ajoute_materiel($user['id'], $_GET["id_sortie"],"bloc", $_POST['taille_bloc'], $_POST['nb_blocs']);
+            ajoute_materiel($user['id'], $_GET["id_sortie"],"detendeur", $_POST['type_detendeur'], $_POST['nb_detendeurs']);
         }
     } else {
         header("Location:connexion.php");
