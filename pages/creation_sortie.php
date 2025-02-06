@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
 <?php
+include 'header.php';
 session_start();
 require '../functions/bdd.php';
 if (!empty($_POST)) {

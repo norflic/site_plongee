@@ -1,4 +1,5 @@
 <?php
+include 'header.php';
 require '../functions/accounts.php';
 require '../functions/bdd.php';
 session_start();

@@ -38,7 +38,11 @@ function create_table_sortie_users(){
     $PDO = new PDO('sqlite:../data/data.db');
     $sql = "create table if not exists sortie_users(
         id_user INTEGER,
-        id_sortie INTEGER ,
+        id_sortie INTEGER,
+        nb_combis INTEGER DEFAULT 0,
+        nb_stabes INTEGER DEFAULT 0,
+        nb_blocs INTEGER DEFAULT 0,
+        nb_detendeurs INTEGER DEFAULT 0,
         PRIMARY KEY (id_user, id_sortie)
 )";
     $PDO->exec($sql);
@@ -144,6 +148,16 @@ function get_sorties(){
 //    var_dump($sortie);
         return $sortie;
     }
+}
+function get_sortie($id_sortie){
+    //    var_dump($nom, $prenom, $mdp);
+    $PDO = new PDO('sqlite:../data/data.db');
+    $stmt = $PDO->prepare("select * from sorties where id = ?");
+    $stmt->execute([$id_sortie]
+    );
+    $sortie = $stmt->fetch(PDO::FETCH_ASSOC);
+//        var_dump($sortie);
+        return $sortie;
 }
 
 function inscription_sortie($id_user, $id_sortie): void

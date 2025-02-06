@@ -31,3 +31,16 @@ div{
 .sortie:hover {
     cursor: pointer ;
 }
+
+form {
+    display: flex;
+    flex-direction: column ;
+    gap: 10px;
+}
+.description_sortie {
+    display: inline-block;
+    padding: 10px;
+    gap: 10px;
+    border: solid;
+
+}

@@ -14,7 +14,7 @@ sorties.forEach(sortie => {
     div_sortie.innerHTML += `<div>${sortie.description}</div>`
 
     div_sortie.addEventListener("click", e => {
-        location.href = `descriptionSortie.php?id_sortie=${sortie.id}`
+        location.href = `inscription_sortie.php?id_sortie=${sortie.id}`
     })
 
     div_sortie.classList.add("sortie")

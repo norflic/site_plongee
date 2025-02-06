@@ -1,8 +1,6 @@
 
 <?php
 include 'header.php';
-?>
-<?php
 require '../functions/bdd.php';
 session_start();
 $sorties = get_sorties()

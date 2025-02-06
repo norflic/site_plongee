@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="form.css">
-</head>
 <?php
+include 'header.php';
 require '../functions/accounts.php';
 require '../functions/bdd.php';
 // Si le tableau $POST existe alors le formulaire a été envoyé
