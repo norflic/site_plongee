@@ -50,7 +50,7 @@ function create_table_sortie_users()
         nb_blocs INTEGER DEFAULT 0,
         type_bloc TEXT,
         nb_detendeurs INTEGER DEFAULT 0,
-        type_detendeur TEXT,
+        type_detendeur TEXT,z
         PRIMARY KEY (id_user, id_sortie)
 )";
     $PDO->exec($sql);
@@ -80,6 +80,15 @@ function get_user(string $nom, string $prenom, string $mdp)
     }
 //    var_dump($user);
     return false;
+}
+
+function get_user_by_id(int $user_id)
+{
+    $PDO = new PDO('sqlite:../data/data.db');
+    $stmt = $PDO->prepare("select * from inscrits where id = ?");
+    $stmt->execute([$user_id]);
+    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $user;
 }
 
 /**
@@ -249,6 +258,18 @@ function ajoute_materiel($id_user, $id_sortie, $materiel, $type, $nb_materiel)
     $stmt->execute();
 //    var_dump($stmt);
 }
+
+function get_sortie_users($id_sortie)
+{
+    //    var_dump($nom, $prenom, $mdp);
+    $PDO = new PDO('sqlite:../data/data.db');
+    $stmt = $PDO->prepare("select id_user from sortie_users where id_sortie = ?");
+    $stmt->execute($id_sortie);
+    $sortie = $stmt->fetch(PDO::FETCH_ASSOC);
+//        var_dump($sortie);
+    return $sortie;
+}
+
 
 ?>
 

@@ -3,5 +3,5 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="accueil.css">
+    <link rel="stylesheet" href="basic.css">
 </head>

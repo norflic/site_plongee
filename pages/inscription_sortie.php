@@ -5,29 +5,35 @@ require '../functions/accounts.php';
 connexion_rederector();
 function nb_equipements_valides(){
     $regex = "/[0-9]/";
-    if (preg_match($regex, $_POST['nb_stabes'])
+    return (preg_match($regex, $_POST['nb_stabes'])
     && preg_match($regex, $_POST['nb_blocs'])
     && preg_match($regex, $_POST['nb_combinaisons'])
-    && preg_match($regex, $_POST['nb_detendeurs'])) {
-    }
+    && preg_match($regex, $_POST['nb_detendeurs']));
+
 }
 if (!empty($_POST)) {
     $user = get_myself();
-    if ($user != false) {
-        $sortie = get_sortie($_GET["id_sortie"]);
-        if ($sortie == false) {
-            header("Location:accueil.php");
-        } else {
-            create_table_sortie_users();
-            inscription_sortie($user['id'], $_GET["id_sortie"]);
-            ajoute_materiel($user['id'], $_GET["id_sortie"],"stabe", $_POST['taille_stabes'], $_POST['nb_stabes']);
-            ajoute_materiel($user['id'], $_GET["id_sortie"],"combi", $_POST['taille_combi'], $_POST['nb_combinaisons']);
-            ajoute_materiel($user['id'], $_GET["id_sortie"],"bloc", $_POST['taille_bloc'], $_POST['nb_blocs']);
-            ajoute_materiel($user['id'], $_GET["id_sortie"],"detendeur", $_POST['type_detendeur'], $_POST['nb_detendeurs']);
-        }
+    if(!nb_equipements_valides()){
+        var_dump("l'un des nombres selectionnes est invalide");
     } else {
-        header("Location:connexion.php");
+        if ($user != false) {
+            $sortie = get_sortie($_GET["id_sortie"]);
+            if ($sortie == false) {
+                header("Location:accueil.php");
+            } else {
+                create_table_sortie_users();
+                inscription_sortie($user['id'], $_GET["id_sortie"]);
+                ajoute_materiel($user['id'], $_GET["id_sortie"],"stabe", $_POST['nb_stabes'], $_POST['taille_stabes']);
+                ajoute_materiel($user['id'], $_GET["id_sortie"],"combi",  $_POST['nb_combinaisons'], $_POST['taille_combi']);
+                ajoute_materiel($user['id'], $_GET["id_sortie"],"bloc", $_POST['nb_blocs']);
+                ajoute_materiel($user['id'], $_GET["id_sortie"],"detendeur",  $_POST['nb_detendeurs'], $_POST['type_detendeur']);
+                header("Location:accueil.php");
+            }
+        } else {
+            header("Location:connexion.php");
+        }
     }
+
 }
 $sortie = get_sortie($_GET["id_sortie"]);
 if ($sortie) {
@@ -127,7 +133,7 @@ function generate_select_type_detendeur() {
         </label>
         <label>nb_blocs
             <input type="number" value="0" name="nb_blocs">
-            <?php generate_select("bloc"); ?>
+<!--            --><?php //generate_select("bloc"); ?>
         </label>
 
         <label>nb_detendeurs
