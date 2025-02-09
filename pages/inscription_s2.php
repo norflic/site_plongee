@@ -3,6 +3,7 @@ session_start();
 require '../functions/verification.php';
 require '../functions/bdd.php';
 require '../functions/accounts.php';
+require 'header.php';
 function verif_all()
 {
     if (empty($_POST['date_naissance'])
@@ -94,19 +95,35 @@ if (!empty($_POST)) {
     }
 }
 ?>
+
 <body>
     <a href="inscription_s1.php">etape precedente</a>
+    <p class="desc_etape">Etape 2 (administratif) :</p>
 <form
         action=""
         method="POST" enctype="multipart/form-data">
-    <label for="date_naissance">date de naissance :
-        <input type="date" value="2020-05-05" name="date_naissance" required><br><br>
+    <label >date de naissance :
+        <input type="date" value="2020-05-05" name="date_naissance" required>
     </label>
+    <label >niveau :
+        <select id="niveau" name="niveau">
+            <option value="N1">Niveau 1</option>
+            <option value="N2">Niveau 2</option>
+            <option value="N3">Niveau 3</option>
+            <option value="PA40">Plongeur Autonome 40m</option>
+            <option value="GP">Guide de Palanquée (N4)</option>
+            <option value="E1">Encadrant Niveau 1</option>
+            <option value="E2">Encadrant Niveau 2</option>
+            <option value="E3">Encadrant Niveau 3</option>
+            <option value="E4">Encadrant Niveau 4</option>
+        </select>
+    </label>
+
     <label>date de création de certificat medical :
-        <input type="date" value="2024-09-09" name="date_certif" required><br><br>
+        <input type="date" value="2024-09-09" name="date_certif" required>
     </label>
     <label>CACI (certificat d'aptitude) :
-        <input type="file" value="" id="caci" name="caci" required><br><br>
+        <input type="file" value="" id="caci" name="caci" required>
     </label>
     <input type="submit" value="suivant">
 </form>

@@ -1,6 +1,7 @@
 <?php
 require '../functions/verification.php';
 require '../functions/bdd.php';
+require 'header.php';
 session_start();
 function verif_all()
 {
@@ -41,36 +42,38 @@ if (!empty($_POST)) {
 ?>
 
 <body>
+<p class="desc_etape">Etape 3 (infos pratiques) :</p>
 <form
         method="POST" enctype="multipart/form-data">
     <fieldset>
         <legend>adresse</legend>
         <label>numero de rue :
-            <input type="text" value="100" name="no_rue" required><br><br>
+            <input type="text" value="100" name="no_rue" required>
         </label>
         <label for="cp">
             Code postal
             <input type="text" value="0" id="code_postal" name="code_postal"
                    placeholder="Enter your postal code here">
+            <label for="ville">
+                Ville
+                <select id="ville" name="ville">
+                    <option value="">Select ville</option>
+                </select>
+            </label>
         </label>
-        <label for="ville">
-            Ville
-            <select id="ville" name="ville">
-                <option value="">Select ville</option>
-            </select> <br/><br/>
-        </label>
+
         <label>rue :
-            <input type="text" value="cours random" name="nom_rue" required><br><br>
+            <input type="text" value="cours random" name="nom_rue" required>
         </label>
         <label>pays :
-            <input type="text" value="france" name="pays" required><br><br>
+            <input type="text" value="france" name="pays" required>
         </label>
     </fieldset>
     <label>Email :
-        <input type="email" value="rtegrfzed@gmail.com" id="e_mail" name="e_mail" required><br><br>
+        <input type="email" value="rtegrfzed@gmail.com" id="e_mail" name="e_mail" required>
     </label>
     <label>numero tel :
-        <input type="tel" value="0781881567" id="no_tel" name="no_tel" required><br><br>
+        <input type="tel" value="0781881567" id="no_tel" name="no_tel" required>
     </label>
     <input type="submit" value="suivant">
 </form>

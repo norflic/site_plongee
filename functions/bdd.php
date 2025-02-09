@@ -7,6 +7,7 @@ function create_table_users()
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nom varchar,
         prenom varchar,
+        niveau varchar,
         mdp varchar,
         date_naissance date,
         ville varchar,
@@ -17,7 +18,9 @@ function create_table_users()
         e_mail varchar,
         date_certif date,
         no_tel varchar,
-        chemin_fichier varchar
+        allergies varchar,
+        chemin_fichier varchar,
+        caci_valide boolean default false
 )";
     $PDO->exec($sql);
 }
@@ -50,7 +53,10 @@ function create_table_sortie_users()
         nb_blocs INTEGER DEFAULT 0,
         type_bloc TEXT,
         nb_detendeurs INTEGER DEFAULT 0,
-        type_detendeur TEXT,z
+        type_detendeur TEXT,
+        type_paiement TEXT default null,
+        date_paiement date default null,
+        reste_paiement INTEGER default null,
         PRIMARY KEY (id_user, id_sortie)
 )";
     $PDO->exec($sql);
@@ -235,7 +241,7 @@ function inscription_sortie($id_user, $id_sortie): void
     }
 }
 
-function ajoute_materiel($id_user, $id_sortie, $materiel, $type, $nb_materiel)
+function ajoute_materiel($id_user, $id_sortie, $materiel, $nb_materiel, $type="")
 {
     $PDO = new PDO('sqlite:../data/data.db');
     if ($materiel == "combi") {

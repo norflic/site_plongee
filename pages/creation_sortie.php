@@ -16,6 +16,8 @@ if (!empty($_POST)) {
             $myself['id']
 //        $_POST['organisateur']
         );
+
+        header("Location: creation_sortie.php");
     }
 }
 

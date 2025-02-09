@@ -36,18 +36,19 @@ if (!empty($_POST)) {
 }
 
 ?>
+
 <body>
-<form
-        action=""
-        method="POST">
+    <p class="desc_etape">Etape 1 (inscription) :</p>
+<form action=""
+      method="POST">
     <label>Nom :
-        <input value="Derrien" type="text" name="nom" required><br><br>
+        <input value="Derrien" type="text" name="nom" required>
     </label>
     <label>Prenom :
-        <input value="Nils" type="text" name="prenom" required><br><br>
+        <input value="Nils" type="text" name="prenom" required>
     </label>
     <label>mot de passe :
-        <input value="1234" type="password" name="mdp" required><br><br>
+        <input value="1234" type="password" name="mdp" required>
     </label>
     <input type="submit" value="suivant">
 </form>

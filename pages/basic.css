@@ -24,12 +24,25 @@
 .sortie:hover {
     cursor: pointer ;
 }
-
+.desc_etape {
+    text-decoration:underline;
+}
 form {
     display: flex;
-    flex-direction: column ;
-    gap: 10px;
+    flex-direction: column;
+    gap: 15px; /* Espacement entre les éléments */
+    max-width: fit-content;
 }
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: fit-content;
+}
+form input {
+    max-width: fit-content;
+}
+
 .description_sortie {
     display: inline-block;
     padding: 10px;

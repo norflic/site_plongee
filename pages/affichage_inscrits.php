@@ -31,10 +31,11 @@ for ($i = 0; $i < count($sortie_users); $i++) {
         <td>" . $sortie_users[$i]['nom'] . " " . $sortie_users[$i]['prenom']. "</td>
         <td>" . $sortie_users[$i]['e_mail'] . "</td>
         <td>" . $sortie_users[$i]['no_tel'] . "</td>
+        <td>paiement confirmé : " . "</td>
 
     </tr>";
 }
-
+//TODO : changer etat paiement a la sortie
 
 ?>
     </table>
