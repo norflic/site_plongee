@@ -87,7 +87,7 @@ function get_user_by_id(int $user_id)
     $PDO = new PDO('sqlite:../data/data.db');
     $stmt = $PDO->prepare("select * from inscrits where id = ?");
     $stmt->execute([$user_id]);
-    $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     return $user;
 }
 
@@ -264,8 +264,8 @@ function get_sortie_users($id_sortie)
     //    var_dump($nom, $prenom, $mdp);
     $PDO = new PDO('sqlite:../data/data.db');
     $stmt = $PDO->prepare("select id_user from sortie_users where id_sortie = ?");
-    $stmt->execute($id_sortie);
-    $sortie = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->execute([$id_sortie]);
+    $sortie = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //        var_dump($sortie);
     return $sortie;
 }

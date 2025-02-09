@@ -3,12 +3,11 @@ require '../functions/bdd.php';
 //$id_sortie = $_GET["id_sortie"];
 $sortie = get_sortie(1);
 $sortie_users = get_sortie_users(1);
-var_dump($sortie_users);
 $organisateur = get_user_by_id($sortie['organisateur']);
 for ($i = 0; $i < count($sortie_users); $i++) {
     $sortie_users[$i] = get_user_by_id($sortie_users[$i]['id_user']);
-//    var_dump($sortie_users[$i]);
 }
+
 require '../pages/header.php';
 ?>
 infos des incrits (dp en rouge):
