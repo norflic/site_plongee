@@ -56,7 +56,7 @@ function create_table_sortie_users()
         type_detendeur TEXT,
         type_paiement TEXT default null,
         date_paiement date default null,
-        reste_paiement INTEGER default null,
+        etat_paiement TEXT default null,
         PRIMARY KEY (id_user, id_sortie)
 )";
     $PDO->exec($sql);
@@ -111,7 +111,7 @@ function get_myself()
 function insertInto_s1_2()
 {
     if (get_user($_SESSION['tmp_nom'], $_SESSION['tmp_prenom'], $_SESSION['tmp_mdp']) != false) {
-        exit("l'utilisateur que vous essayez de créer existe déja");
+        exit("l'utilisateur que vous essayez de créer existe déja (meme nom et prenom)");
     } else {
         $PDO = new PDO('sqlite:../data/data.db');
         $sql = "INSERT INTO inscrits (nom, prenom, mdp, 
@@ -275,7 +275,15 @@ function get_sortie_users($id_sortie)
 //        var_dump($sortie);
     return $sortie;
 }
-
+function get_infos_paiement($id_sortie, $id_user){
+    //    var_dump($nom, $prenom, $mdp);
+    $PDO = new PDO('sqlite:../data/data.db');
+    $stmt = $PDO->prepare("select type_paiement, date_paiement, etat_paiement from sortie_users where id_sortie = ? and id_user = ?");
+    $stmt->execute([$id_sortie, $id_user]);
+    $infos_paiement = $stmt->fetch(PDO::FETCH_ASSOC);
+//        var_dump($infos_paiement);
+    return $infos_paiement;
+}
 
 ?>
 

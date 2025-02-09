@@ -8,8 +8,9 @@ function verif_all()
 {
     if (empty($_POST['date_naissance'])
         || empty($_POST['date_certif'])
+        || empty($_POST['niveau'])
         || empty($_FILES['caci'])) {
-        print("l'un des chaps n'est pas rempli");
+        print("l'un des chapms n'est pas rempli");
         return false;
     } else {
         if (verif_naissance()
