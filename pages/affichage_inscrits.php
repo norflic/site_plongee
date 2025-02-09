@@ -45,14 +45,33 @@ function select_type_paiement($type_actuel)
 }
 
 
-function select_date_paiement($date_actuelle)
+function select_date_paiement($ancienn_date)
 {
+    if($ancienn_date == null){
+        $html = "<label >
+        <input type='date' value='null' name='date_paiement'>
+        </label>";
+    } else {
+        $html = "<label >
+        <input type='date' value='$ancienn_date' name='date_paiement'>
+    </label>";
+    }
+    return $html;
 
 }
 
-function select_etat_paiement($etat_actuel)
+function select_etat_paiement($ancien_etat)
 {
-
+    if($ancien_etat == null){
+        $html = "<label >
+            <input type='text' value='null' name='date_paiement'>
+            </label>";
+    } else {
+        $html = "<label >
+        <input type='text' value='$ancien_etat' name='date_paiement'>
+    </label>";
+    }
+    return $html;
 }
 
 if (!empty($_POST)) {
@@ -79,8 +98,8 @@ require '../pages/header.php';
         <td>" . $organisateur['e_mail'] . "</td>
         <td>" . $organisateur['no_tel'] . "</td>
         <td>" . select_type_paiement($infos_peiement_organisateur['type_paiement']) . "</td>
-        <td>" . $infos_peiement_organisateur['date_paiement'] . "</td>
-        <td>" . $infos_peiement_organisateur['etat_paiement'] . "</td>
+        <td>" . select_date_paiement($infos_peiement_organisateur['date_paiement']) . "</td>
+        <td>" . select_etat_paiement($infos_peiement_organisateur['etat_paiement']) . "</td>
     </tr>";
 
 
@@ -91,9 +110,8 @@ require '../pages/header.php';
         <td>" . $sortie_users[$i]['e_mail'] . "</td>
         <td>" . $sortie_users[$i]['no_tel'] . "</td>
         <td>" . select_type_paiement($infos_paiement_users[$i]['type_paiement']) . "</td>
-        <td>" . $infos_paiement_users[$i]['date_paiement'] . "</td>
-        <td>" . $infos_paiement_users[$i]['etat_paiement'] . "</td>
-
+        <td>" . select_date_paiement($infos_paiement_users[$i]['date_paiement']) . "</td>
+        <td>" . select_etat_paiement($infos_paiement_users[$i]['etat_paiement']) . "</td>
     </tr>";
         }
         //><?php select_type_paiement($infos_paiement_users['type_paiement']); ?>
@@ -101,9 +119,5 @@ require '../pages/header.php';
 
         ?>
     </table>
-    <input type="submit" value="suivant">
+    <input type="submit" value="enregistrer modifs">
 </form>
-
-<!--<td>-->
-<!--    " .  $sortie_users[$i]['mode_paiement'] != null ? $sortie_users[$i]['e_mail'] : 'NULL' . "-->
-<!--</td>-->
