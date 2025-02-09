@@ -10,7 +10,7 @@ for ($i = 0; $i < count($sortie_users); $i++) {
     $id_user = $sortie_users[$i]['id_user'];
     $sortie_users[$i] = get_user_by_id($id_user);
     $infos_paiement_users[$i] = get_infos_paiement($id_sortie, $id_user);
-    var_dump($infos_paiement_users[$i]);
+//    var_dump($infos_paiement_users[$i]);
 }
 
 /**
@@ -18,7 +18,7 @@ for ($i = 0; $i < count($sortie_users); $i++) {
  * @param $type_actuel
  * @return string
  */
-function select_type_paiement($type_actuel)
+function select_type_paiement($type_actuel): string
 {
     $types_paiement = [
         'null' => 'non_définie',
@@ -45,7 +45,7 @@ function select_type_paiement($type_actuel)
 }
 
 
-function select_date_paiement($ancienn_date)
+function select_date_paiement($ancienn_date): string
 {
     if($ancienn_date == null){
         $html = "<label >
@@ -60,15 +60,15 @@ function select_date_paiement($ancienn_date)
 
 }
 
-function select_etat_paiement($ancien_etat)
+function select_etat_paiement($ancien_etat): string
 {
     if($ancien_etat == null){
         $html = "<label >
-            <input type='text' value='null' name='date_paiement'>
+            <input type='text' value='null' name='etat_paiement'>
             </label>";
     } else {
         $html = "<label >
-        <input type='text' value='$ancien_etat' name='date_paiement'>
+        <input type='text' value='$ancien_etat' name='etat_paiement'>
     </label>";
     }
     return $html;
@@ -76,6 +76,9 @@ function select_etat_paiement($ancien_etat)
 
 if (!empty($_POST)) {
     var_dump($_POST);
+    for($i = 0; $i < count($_POST); $i++) {
+
+    }
 }
 require '../pages/header.php';
 ?>
@@ -93,6 +96,7 @@ require '../pages/header.php';
         </tr>
         <?php
         echo "
+    <input type='hidden' value='{$organisateur['id']}'>
     <tr class='tab_organisateur'>
         <td>" . $organisateur['nom'] . " " . $organisateur['prenom'] . "</td>
         <td>" . $organisateur['e_mail'] . "</td>
@@ -103,8 +107,9 @@ require '../pages/header.php';
     </tr>";
 
 
-        for ($i = 0; $i < count($sortie_users); $i++) {
-            echo "
+for ($i = 0; $i < count($sortie_users); $i++) {
+    echo "
+    <input type='hidden' value='{$sortie_users[$i]['id']}' name='id_sortie_user'>
     <tr>
         <td>" . $sortie_users[$i]['nom'] . " " . $sortie_users[$i]['prenom'] . "</td>
         <td>" . $sortie_users[$i]['e_mail'] . "</td>
@@ -114,7 +119,6 @@ require '../pages/header.php';
         <td>" . select_etat_paiement($infos_paiement_users[$i]['etat_paiement']) . "</td>
     </tr>";
         }
-        //><?php select_type_paiement($infos_paiement_users['type_paiement']); ?>
         //TODO : changer etat paiement a la sortie
 
         ?>
