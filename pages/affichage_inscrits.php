@@ -26,7 +26,7 @@ function select_type_paiement($id_user, $type_actuel): string
         'liquide' => 'en cours (liquide)'
     ];
     var_dump($id_user);
-    $html = "<select name='type_paiement'>";
+    $html = "<select name='{$id_user}_type_paiement'>";
 
     // Ajouter l'option correspondant au type actuel en premier
     if ($type_actuel !== null && isset($types_paiement[$type_actuel])) {
@@ -49,11 +49,11 @@ function select_date_paiement($id_user, $ancienn_date): string
 {
     if($ancienn_date == null){
         $html = "<label >
-        <input type='date' value='null' name='date_paiement'>
+        <input type='date' value='null' name='{$id_user}_date_paiement'>
         </label>";
     } else {
         $html = "<label >
-        <input type='date' value='$ancienn_date' name='$id_user.date_paiement'>
+        <input type='date' value='$ancienn_date' name='{$id_user}_date_paiement'>
     </label>";
     }
     return $html;
@@ -62,21 +62,24 @@ function select_date_paiement($id_user, $ancienn_date): string
 
 function select_etat_paiement($id_user, $ancien_etat): string
 {
-    if($ancien_etat == null){
-        $html = "<label >
-            <input type='text' value='null' name='etat_paiement'>
-            </label>";
+    if ($ancien_etat == null) {
+        // Utilisation de la concaténation correcte pour le name
+        $html = "<label>
+            <input type='text' value='null' name='{$id_user}_etat_paiement'>
+        </label>";
     } else {
-        $html = "<label >
-        <input type='text' value='$ancien_etat' name='$id_user.etat_paiement'>
-    </label>";
+        // Utilisation de la concaténation correcte pour le name
+        $html = "<label>
+            <input type='text' value='{$ancien_etat}' name='{$id_user}_etat_paiement'>
+        </label>";
     }
     return $html;
 }
 
+
 if (!empty($_POST)) {
     var_dump($_POST);
-    for($i = 0; $i < count($_POST); $i++) {
+        for($i = 0; $i < count($_POST); $i++) {
 
     }
 }
@@ -95,8 +98,9 @@ require '../pages/header.php';
             <th>etat_paiement</th>
         </tr>
         <?php
+//        <input type='hidden' value='{$organisateur['id']}'>
         echo "
-    <input type='hidden' value='{$organisateur['id']}'>
+    
     <tr class='tab_organisateur'>
         <td>" . $organisateur['nom'] . " " . $organisateur['prenom'] . "</td>
         <td>" . $organisateur['e_mail'] . "</td>
@@ -108,7 +112,7 @@ require '../pages/header.php';
 
 
 for ($i = 0; $i < count($sortie_users); $i++) {
-//    $id_user = $sortie_users[$i]['id'];
+    $id_user = $sortie_users[$i]['id'];
     echo "
     <input type='hidden' value='{$id_user}' name='id_sortie_user'>
     <tr>
