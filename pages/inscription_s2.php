@@ -60,6 +60,7 @@ function fichier_valide()
 function get_chemin_fichier()
 {
     if (fichier_valide()) {
+        var_dump($_FILES['caci']['error'] );
         $uploads_dir = "../uploads";
         $tmp_name = $_FILES["caci"]["tmp_name"];
         $destination = $uploads_dir . "/" . $_FILES["caci"]["name"];
