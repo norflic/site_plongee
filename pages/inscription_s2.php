@@ -60,9 +60,9 @@ function fichier_valide()
 function get_chemin_fichier()
 {
     if (fichier_valide()) {
-        $uploads_dir = '../uploads';
+        $uploads_dir = "../uploads";
         $tmp_name = $_FILES["caci"]["tmp_name"];
-        $destination = $uploads_dir . '/' . $_FILES["caci"]["name"];
+        $destination = $uploads_dir . "/" . $_FILES["caci"]["name"];
         var_dump($destination);
         if (!move_uploaded_file($tmp_name, $destination)) {
             var_dump("debut, dest");
