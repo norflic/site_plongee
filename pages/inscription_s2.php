@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 session_start();
 require '../functions/verification.php';
 require '../functions/bdd.php';
@@ -66,6 +71,7 @@ function get_chemin_fichier()
         $destination = $uploads_dir . "/" . $_FILES["caci"]["name"];
         var_dump($destination);
         if (!move_uploaded_file($tmp_name, $destination)) {
+
             var_dump("debut, dest");
             var_dump($tmp_name);
             var_dump($destination);
